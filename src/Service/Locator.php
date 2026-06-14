@@ -8,7 +8,6 @@ defined('ABSPATH') || exit;
 
 use Locator\Admin\Settings;
 use Locator\Contract\HasHooks;
-use Locator\Model\Store;
 use Locator\Repository\StoreRepository;
 use Locator\Util\TemplateLoader;
 
@@ -20,7 +19,7 @@ use const Locator\VERSION;
  *
  * Filtering is performed client-side (no AJAX, no external API): every store
  * carries a lower-cased search haystack on a data attribute, and a small script
- * shows/hides cards as the visitor types. This keeps the free MVP fast, private
+ * shows/hides cards as the visitor types. This keeps the directory fast, private
  * and fully functional without JavaScript (all stores are rendered server-side).
  */
 final class Locator implements HasHooks
@@ -75,27 +74,11 @@ final class Locator implements HasHooks
     /**
      * Render the [locator] shortcode.
      *
-     * Attributes:
-     * - layout: "list" | "grid" (overrides the saved default)
-     * - search: "1" | "0"       (force-show or hide the search box)
-     *
      * @param array<string, mixed>|string $atts
      */
     public function renderShortcode(array|string $atts = []): string
     {
         $settings = $this->settings->all();
-
-        $atts = shortcode_atts(
-            [
-                'layout' => (string) ($settings['layout'] ?? 'list'),
-                'search' => $settings['show_search'] ? '1' : '0',
-            ],
-            is_array($atts) ? $atts : [],
-            'locator',
-        );
-
-        $layout = in_array($atts['layout'], ['list', 'grid'], true) ? (string) $atts['layout'] : 'list';
-        $showSearch = '1' === (string) $atts['search'];
 
         $stores = $this->repository->all();
 
@@ -107,34 +90,9 @@ final class Locator implements HasHooks
 
         return $this->templates->render('locator-list', [
             'stores'      => $stores,
-            'layout'      => $layout,
-            'show_search' => $showSearch,
+            'show_search' => ! empty($settings['show_search']),
             'fields'      => $fields,
             'empty_text'  => __('No store locations have been added yet.', 'locator'),
         ]);
-    }
-
-    /**
-     * Build a Google Maps directions URL for a store, preferring coordinates and
-     * falling back to the postal address.
-     */
-    public static function directionsUrl(Store $store): string
-    {
-        if (null !== $store->lat && null !== $store->lng) {
-            $query = $store->lat . ',' . $store->lng;
-        } else {
-            $query = trim(implode(', ', array_filter([
-                $store->address,
-                $store->postcode,
-                $store->city,
-                $store->country,
-            ])));
-        }
-
-        if ('' === $query) {
-            return '';
-        }
-
-        return 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($query);
     }
 }

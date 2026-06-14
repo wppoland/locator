@@ -14,9 +14,9 @@ use const Locator\VERSION;
 /**
  * Admin settings page, registered as a WooCommerce submenu.
  *
- * Stores everything under the `locator_settings` option (array): the results
- * layout, whether the search box shows, and which detail fields are visible on
- * each store card. All output is escaped; all input is sanitised on save.
+ * Stores everything under the `locator_settings` option (array): whether the
+ * search box shows, and which detail fields are visible on each store card. All
+ * output is escaped; all input is sanitised on save.
  */
 final class Settings implements HasHooks
 {
@@ -25,13 +25,8 @@ final class Settings implements HasHooks
     private const PAGE  = 'locator-settings';
     private const GROUP = 'locator_settings_group';
 
-    private const LAYOUTS = ['list', 'grid'];
-
     /** Fields the merchant can toggle on the storefront cards. */
-    private const TOGGLEABLE_FIELDS = ['address', 'hours', 'phone', 'email', 'directions'];
-
-    /** Incremented to give each inline-help control a unique id/anchor. */
-    private int $helpSeq = 0;
+    private const TOGGLEABLE_FIELDS = ['address', 'hours', 'phone'];
 
     public function registerHooks(): void
     {
@@ -96,16 +91,13 @@ final class Settings implements HasHooks
         }
 
         $settings = $this->all();
-        $layout   = (string) ($settings['layout'] ?? 'list');
         /** @var array<string, bool> $fields */
         $fields = is_array($settings['fields'] ?? null) ? $settings['fields'] : [];
 
         $fieldLabels = [
-            'address'    => __('Address', 'locator'),
-            'hours'      => __('Opening hours', 'locator'),
-            'phone'      => __('Phone', 'locator'),
-            'email'      => __('Email', 'locator'),
-            'directions' => __('"Get directions" link', 'locator'),
+            'address' => __('Address', 'locator'),
+            'hours'   => __('Opening hours', 'locator'),
+            'phone'   => __('Phone', 'locator'),
         ];
         ?>
         <div class="wrap locator-admin">
@@ -135,26 +127,7 @@ final class Settings implements HasHooks
                     <table class="form-table" role="presentation">
                         <tbody>
                             <tr>
-                                <th scope="row">
-                                    <label for="locator_layout"><?php esc_html_e('Results layout', 'locator'); ?></label>
-                                    <?php $this->help(__('Choose how locations are arranged. "List" stacks them in a single column; "Grid" flows them into responsive cards.', 'locator')); ?>
-                                </th>
-                                <td>
-                                    <select id="locator_layout" name="<?php echo esc_attr(self::OPTION); ?>[layout]">
-                                        <option value="list" <?php selected($layout, 'list'); ?>>
-                                            <?php esc_html_e('List (single column)', 'locator'); ?>
-                                        </option>
-                                        <option value="grid" <?php selected($layout, 'grid'); ?>>
-                                            <?php esc_html_e('Grid (responsive cards)', 'locator'); ?>
-                                        </option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <?php esc_html_e('Search box', 'locator'); ?>
-                                    <?php $this->help(__('Show a text box above the results so visitors can instantly filter locations by city, postcode or name. Filtering happens in the browser — no data leaves the page.', 'locator')); ?>
-                                </th>
+                                <th scope="row"><?php esc_html_e('Search box', 'locator'); ?></th>
                                 <td>
                                     <label for="locator_show_search">
                                         <input type="checkbox" id="locator_show_search"
@@ -162,6 +135,9 @@ final class Settings implements HasHooks
                                             <?php checked((bool) ($settings['show_search'] ?? true), true); ?> />
                                         <?php esc_html_e('Show the search box above the results.', 'locator'); ?>
                                     </label>
+                                    <p class="description">
+                                        <?php esc_html_e('Visitors can instantly filter locations by city, postcode or name. Filtering happens in the browser — no data leaves the page.', 'locator'); ?>
+                                    </p>
                                 </td>
                             </tr>
                         </tbody>
@@ -206,23 +182,6 @@ final class Settings implements HasHooks
     }
 
     /**
-     * Render an accessible inline-help affordance using the native Popover API.
-     */
-    private function help(string $text): void
-    {
-        $id = 'locator-help-' . (++$this->helpSeq);
-        ?>
-        <button type="button" class="locator-help"
-            aria-label="<?php esc_attr_e('More information', 'locator'); ?>"
-            aria-describedby="<?php echo esc_attr($id); ?>"
-            popovertarget="<?php echo esc_attr($id); ?>">?</button>
-        <div id="<?php echo esc_attr($id); ?>" class="locator-tip" role="tooltip" popover hidden>
-            <?php echo esc_html($text); ?>
-        </div>
-        <?php
-    }
-
-    /**
      * Sanitise the submitted settings before save.
      *
      * @param mixed $raw
@@ -234,11 +193,6 @@ final class Settings implements HasHooks
             $raw = [];
         }
 
-        $layout = isset($raw['layout']) ? sanitize_key((string) $raw['layout']) : 'list';
-        if (! in_array($layout, self::LAYOUTS, true)) {
-            $layout = 'list';
-        }
-
         $rawFields = isset($raw['fields']) && is_array($raw['fields']) ? $raw['fields'] : [];
         $fields    = [];
         foreach (self::TOGGLEABLE_FIELDS as $field) {
@@ -246,7 +200,6 @@ final class Settings implements HasHooks
         }
 
         return [
-            'layout'      => $layout,
             'show_search' => ! empty($raw['show_search']),
             'fields'      => $fields,
         ];

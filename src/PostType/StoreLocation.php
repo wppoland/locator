@@ -14,8 +14,8 @@ use WP_Post;
  *
  * Locations are managed in wp-admin under the WooCommerce menu and surfaced on
  * the storefront via the [locator] shortcode. Each location keeps its address,
- * contact details, opening hours and optional coordinates as post meta. All meta
- * is sanitised on save behind a nonce + manage_woocommerce capability check.
+ * contact details and opening hours as post meta. All meta is sanitised on save
+ * behind a nonce + manage_woocommerce capability check.
  */
 final class StoreLocation implements HasHooks
 {
@@ -26,10 +26,7 @@ final class StoreLocation implements HasHooks
     public const META_POSTCODE = '_locator_postcode';
     public const META_COUNTRY  = '_locator_country';
     public const META_PHONE    = '_locator_phone';
-    public const META_EMAIL    = '_locator_email';
     public const META_HOURS    = '_locator_hours';
-    public const META_LAT      = '_locator_lat';
-    public const META_LNG      = '_locator_lng';
 
     private const NONCE_ACTION = 'locator_save_store';
     private const NONCE_FIELD  = 'locator_store_nonce';
@@ -84,7 +81,7 @@ final class StoreLocation implements HasHooks
                 'query_var'           => false,
                 'hierarchical'        => false,
                 'menu_icon'           => 'dashicons-store',
-                'supports'            => ['title', 'editor', 'thumbnail', 'page-attributes'],
+                'supports'            => ['title', 'page-attributes'],
                 'capability_type'     => 'post',
                 'map_meta_cap'        => true,
                 'capabilities'        => [
@@ -160,10 +157,7 @@ final class StoreLocation implements HasHooks
             self::META_POSTCODE => [__('Postcode / ZIP', 'locator'), 'text'],
             self::META_COUNTRY  => [__('Country', 'locator'), 'text'],
             self::META_PHONE    => [__('Phone', 'locator'), 'text'],
-            self::META_EMAIL    => [__('Email', 'locator'), 'email'],
             self::META_HOURS    => [__('Opening hours', 'locator'), 'textarea'],
-            self::META_LAT      => [__('Latitude (optional)', 'locator'), 'text'],
-            self::META_LNG      => [__('Longitude (optional)', 'locator'), 'text'],
         ];
         ?>
         <table class="form-table locator-meta" role="presentation">
@@ -186,15 +180,10 @@ final class StoreLocation implements HasHooks
                                 </p>
                             <?php endif; ?>
                         <?php else : ?>
-                            <input type="<?php echo esc_attr('email' === $type ? 'email' : 'text'); ?>"
+                            <input type="text"
                                 id="<?php echo esc_attr($id); ?>" class="regular-text"
                                 name="<?php echo esc_attr($metaKey); ?>"
                                 value="<?php echo esc_attr($value); ?>" />
-                            <?php if (self::META_LAT === $metaKey || self::META_LNG === $metaKey) : ?>
-                                <p class="description">
-                                    <?php esc_html_e('Decimal degrees. Used by the optional map add-on; the free list does not require it.', 'locator'); ?>
-                                </p>
-                            <?php endif; ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -250,18 +239,5 @@ final class StoreLocation implements HasHooks
             ? sanitize_textarea_field(wp_unslash((string) $_POST[self::META_HOURS]))
             : '';
         update_post_meta($postId, self::META_HOURS, $hours);
-
-        $email = isset($_POST[self::META_EMAIL])
-            ? sanitize_email(wp_unslash((string) $_POST[self::META_EMAIL]))
-            : '';
-        update_post_meta($postId, self::META_EMAIL, is_email($email) ? $email : '');
-
-        foreach ([self::META_LAT, self::META_LNG] as $coordKey) {
-            $rawCoord = isset($_POST[$coordKey])
-                ? sanitize_text_field(wp_unslash((string) $_POST[$coordKey]))
-                : '';
-            $coord = ('' !== $rawCoord && is_numeric($rawCoord)) ? (string) (float) $rawCoord : '';
-            update_post_meta($postId, $coordKey, $coord);
-        }
     }
 }

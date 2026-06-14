@@ -14,36 +14,32 @@ Show your physical store locations with a searchable, accessible list customers 
 == Description ==
 
 Locator adds a simple, fast store-locator to your WooCommerce shop. Add each
-physical store — name, address, phone, opening hours and optional coordinates —
-as a managed location, then drop the `[locator]` shortcode on any page to render
-a clean, searchable directory your customers can instantly filter by city,
-postcode or name.
+physical store — name, address, phone and opening hours — as a managed location,
+then drop the `[locator]` shortcode on any page to render a clean, searchable
+directory your customers can instantly filter by city, postcode or name.
 
-The free plugin is a self-contained, privacy-friendly directory: there is no
-external API, no tracking and no map key required. Every location is rendered
-server-side, so the list works even with JavaScript disabled; when JavaScript is
-available the search box filters cards instantly in the browser.
+The plugin is a self-contained, privacy-friendly directory: there is no external
+API, no tracking and no map key required. Every location is rendered server-side,
+so the list works even with JavaScript disabled; when JavaScript is available the
+search box filters cards instantly in the browser.
 
 **Features**
 
 * Manage store locations as a dedicated post type under WooCommerce.
-* Each location stores address, city, postcode, country, phone, email, opening hours and optional latitude/longitude.
+* Each location stores address, city, postcode, country, phone and opening hours.
 * `[locator]` shortcode renders a searchable, accessible directory.
 * Instant client-side filtering by city, postcode or store name — no data leaves the page.
-* List or responsive grid layout.
-* Choose which fields appear on each card (address, hours, phone, email, "Get directions").
-* "Get directions" links open the visitor's map app using coordinates or the postal address.
+* Choose which fields appear on each card (address, opening hours, phone).
 * Accessible by design: ARIA live region for result counts, keyboard-friendly, focus-visible styles, screen-reader text.
 * Core Web Vitals friendly: no layout shift, assets enqueued only when the shortcode is on the page.
 * Dark-mode aware admin and storefront styles; respects prefers-reduced-motion.
-* Theme-overridable templates.
 
 == Installation ==
 
 1. Upload the plugin to `/wp-content/plugins/locator`, or install via Plugins → Add New.
 2. Activate it. WooCommerce must be active.
 3. Go to WooCommerce → Store Locations and add your stores.
-4. Configure WooCommerce → Store Locator (layout and visible fields).
+4. Configure WooCommerce → Store Locator (search box and visible fields).
 5. Add the `[locator]` shortcode to any page.
 
 == Frequently Asked Questions ==
@@ -54,15 +50,11 @@ Yes. Locator registers under the WooCommerce menu and requires WooCommerce to be
 
 = Does it show a map? =
 
-The free version is a searchable list (no map key needed). Map embedding is planned for the Pro add-on.
+No. Locator renders a searchable list — no map key or external service needed.
 
-= Can I change the layout? =
+= Which details can I show on each card? =
 
-Yes — choose List or Grid in the settings, or pass `layout="grid"` to the shortcode.
-
-= Can I override the markup? =
-
-Yes. Copy `templates/locator-list.php` into `your-theme/locator/locator-list.php`.
+The store name is always shown. You can toggle address, opening hours and phone in the settings.
 
 == Screenshots ==
 
@@ -73,4 +65,4 @@ Yes. Copy `templates/locator-list.php` into `your-theme/locator/locator-list.php
 == Changelog ==
 
 = 0.1.0 =
-* Initial release: store-location post type, [locator] shortcode, searchable list/grid, settings.
+* Initial release: store-location post type, [locator] shortcode, searchable list, settings.

@@ -4,13 +4,11 @@ Locator shows your physical store locations as a searchable, accessible list cus
 
 ## Features
 
-- Manage store locations under **WooCommerce → Store Locations** (name, address, city, postcode, country, phone, email, opening hours and optional coordinates).
+- Manage store locations under **WooCommerce → Store Locations** (name, address, city, postcode, country, phone and opening hours).
 - `[locator]` shortcode renders a searchable directory on any page.
 - Instant client-side filtering by city, postcode or name — no data leaves the page, and the list still works with JavaScript disabled.
-- List or responsive grid layout, with control over which fields appear per card.
-- "Get directions" links built from coordinates or the postal address.
+- Choose which fields appear on each card (address, opening hours, phone).
 - Accessible and Core Web Vitals friendly: assets load only when the shortcode is present, and the layout is dark-mode aware.
-- Theme-overridable template: `your-theme/locator/locator-list.php`.
 
 ## Installation
 

@@ -46,47 +46,17 @@ final class StoreRepository
         return $stores;
     }
 
-    public function count(): int
-    {
-        $counts = wp_count_posts(StoreLocation::POST_TYPE);
-
-        return isset($counts->publish) ? (int) $counts->publish : 0;
-    }
-
     private function hydrate(WP_Post $post): Store
     {
-        $thumbId  = get_post_thumbnail_id($post->ID);
-        $thumbUrl = '';
-        if ($thumbId) {
-            $src = wp_get_attachment_image_url((int) $thumbId, 'medium');
-            $thumbUrl = is_string($src) ? $src : '';
-        }
-
         return new Store(
             id: $post->ID,
             name: get_the_title($post),
-            description: (string) $post->post_content,
             address: (string) get_post_meta($post->ID, StoreLocation::META_ADDRESS, true),
             city: (string) get_post_meta($post->ID, StoreLocation::META_CITY, true),
             postcode: (string) get_post_meta($post->ID, StoreLocation::META_POSTCODE, true),
             country: (string) get_post_meta($post->ID, StoreLocation::META_COUNTRY, true),
             phone: (string) get_post_meta($post->ID, StoreLocation::META_PHONE, true),
-            email: (string) get_post_meta($post->ID, StoreLocation::META_EMAIL, true),
             hours: (string) get_post_meta($post->ID, StoreLocation::META_HOURS, true),
-            lat: $this->coord(get_post_meta($post->ID, StoreLocation::META_LAT, true)),
-            lng: $this->coord(get_post_meta($post->ID, StoreLocation::META_LNG, true)),
-            thumbnailUrl: $thumbUrl,
         );
-    }
-
-    private function coord(mixed $raw): ?float
-    {
-        if (! is_scalar($raw)) {
-            return null;
-        }
-
-        $value = (string) $raw;
-
-        return ('' !== $value && is_numeric($value)) ? (float) $value : null;
     }
 }

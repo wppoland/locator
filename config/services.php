@@ -29,7 +29,7 @@ return static function (Container $c): void {
     $c->singleton(StoreLocation::class, static fn (): StoreLocation => new StoreLocation());
 
     // Settings is resolved both in admin (its own page) and on the front end
-    // (the shortcode reads layout/fields), so register it unconditionally.
+    // (the shortcode reads the visible-fields config), so register it unconditionally.
     $c->singleton(Settings::class, static fn (): Settings => new Settings());
 
     // Front-end directory service.

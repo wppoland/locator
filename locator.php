@@ -37,12 +37,11 @@ define('LOCATOR_DIR', plugin_dir_path(__FILE__));
 define('LOCATOR_URL', plugin_dir_url(__FILE__));
 
 /**
- * Declare WooCommerce HPOS (Custom Order Tables) + Blocks compatibility.
+ * Declare WooCommerce HPOS (Custom Order Tables) compatibility.
  */
 add_action('before_woocommerce_init', static function (): void {
     if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', PLUGIN_FILE, true);
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', PLUGIN_FILE, true);
     }
 });
 
@@ -81,7 +80,7 @@ add_action('plugins_loaded', static function (): void {
     }
 
     // Boot on init:0 so the CPT, shortcode and translations register at the
-    // correct, translation-safe moment. boot() fires do_action('locator/booted').
+    // correct, translation-safe moment.
     add_action('init', static function (): void {
         Plugin::instance()->boot();
     }, 0);
