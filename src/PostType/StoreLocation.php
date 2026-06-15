@@ -26,7 +26,16 @@ final class StoreLocation implements HasHooks
     public const META_POSTCODE = '_locator_postcode';
     public const META_COUNTRY  = '_locator_country';
     public const META_PHONE    = '_locator_phone';
+    public const META_EMAIL    = '_locator_email';
     public const META_HOURS    = '_locator_hours';
+
+    /**
+     * Latitude / longitude. Optional; populated by the store editor so add-ons
+     * (e.g. Locator Pro's map) can place each location on a map. Stored as plain
+     * decimal-degree strings and read back as nullable floats.
+     */
+    public const META_LAT = '_locator_lat';
+    public const META_LNG = '_locator_lng';
 
     private const NONCE_ACTION = 'locator_save_store';
     private const NONCE_FIELD  = 'locator_store_nonce';
@@ -81,7 +90,7 @@ final class StoreLocation implements HasHooks
                 'query_var'           => false,
                 'hierarchical'        => false,
                 'menu_icon'           => 'dashicons-store',
-                'supports'            => ['title', 'page-attributes'],
+                'supports'            => ['title', 'editor', 'thumbnail', 'page-attributes'],
                 'capability_type'     => 'post',
                 'map_meta_cap'        => true,
                 'capabilities'        => [
@@ -157,6 +166,9 @@ final class StoreLocation implements HasHooks
             self::META_POSTCODE => [__('Postcode / ZIP', 'locator'), 'text'],
             self::META_COUNTRY  => [__('Country', 'locator'), 'text'],
             self::META_PHONE    => [__('Phone', 'locator'), 'text'],
+            self::META_EMAIL    => [__('Email', 'locator'), 'text'],
+            self::META_LAT      => [__('Latitude', 'locator'), 'text'],
+            self::META_LNG      => [__('Longitude', 'locator'), 'text'],
             self::META_HOURS    => [__('Opening hours', 'locator'), 'textarea'],
         ];
         ?>
@@ -184,6 +196,11 @@ final class StoreLocation implements HasHooks
                                 id="<?php echo esc_attr($id); ?>" class="regular-text"
                                 name="<?php echo esc_attr($metaKey); ?>"
                                 value="<?php echo esc_attr($value); ?>" />
+                            <?php if (self::META_LNG === $metaKey) : ?>
+                                <p class="description">
+                                    <?php esc_html_e('Optional. Enter latitude and longitude as decimal degrees (e.g. 52.2297, 21.0122) to place this location on a map.', 'locator'); ?>
+                                </p>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -230,6 +247,16 @@ final class StoreLocation implements HasHooks
             update_post_meta($postId, $key, $raw);
         }
 
+        $email = isset($_POST[self::META_EMAIL])
+            ? sanitize_email(wp_unslash((string) $_POST[self::META_EMAIL]))
+            : '';
+        update_post_meta($postId, self::META_EMAIL, $email);
+
+        // Coordinates: keep only valid decimal-degree numbers; clear otherwise so
+        // the store reads back as un-geocoded (null lat/lng).
+        $this->saveCoordinate($postId, self::META_LAT, -90.0, 90.0);
+        $this->saveCoordinate($postId, self::META_LNG, -180.0, 180.0);
+
         $address = isset($_POST[self::META_ADDRESS])
             ? sanitize_textarea_field(wp_unslash((string) $_POST[self::META_ADDRESS]))
             : '';
@@ -239,5 +266,33 @@ final class StoreLocation implements HasHooks
             ? sanitize_textarea_field(wp_unslash((string) $_POST[self::META_HOURS]))
             : '';
         update_post_meta($postId, self::META_HOURS, $hours);
+    }
+
+    /**
+     * Persist a coordinate meta value, validating it as a decimal-degree number
+     * within range. Blank or out-of-range input clears the value so the location
+     * is treated as un-geocoded.
+     */
+    private function saveCoordinate(int $postId, string $metaKey, float $min, float $max): void
+    {
+        // Nonce + capability are verified by the calling saveMeta() before this runs.
+        // phpcs:disable WordPress.Security.NonceVerification.Missing
+        $raw = isset($_POST[$metaKey])
+            ? sanitize_text_field(wp_unslash((string) $_POST[$metaKey]))
+            : '';
+        // phpcs:enable WordPress.Security.NonceVerification.Missing
+
+        if ('' === $raw || ! is_numeric($raw)) {
+            delete_post_meta($postId, $metaKey);
+            return;
+        }
+
+        $value = (float) $raw;
+        if ($value < $min || $value > $max) {
+            delete_post_meta($postId, $metaKey);
+            return;
+        }
+
+        update_post_meta($postId, $metaKey, (string) $value);
     }
 }

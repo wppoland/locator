@@ -49,5 +49,14 @@ final class Plugin
                 $service->registerHooks();
             }
         }
+
+        /**
+         * Fires after the FREE plugin has fully booted and all of its services
+         * are registered. Add-ons (e.g. Locator Pro) hook this to extend the
+         * shared container and register their own services.
+         *
+         * @param Plugin $plugin The booted plugin instance.
+         */
+        do_action('locator/booted', $this);
     }
 }

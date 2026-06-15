@@ -46,17 +46,58 @@ final class StoreRepository
         return $stores;
     }
 
+    /**
+     * Count published stores.
+     */
+    public function count(): int
+    {
+        $query = new WP_Query([
+            'post_type'              => StoreLocation::POST_TYPE,
+            'post_status'            => 'publish',
+            'posts_per_page'         => 1,
+            'fields'                 => 'ids',
+            'no_found_rows'          => false,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+            'ignore_sticky_posts'    => true,
+        ]);
+
+        return (int) $query->found_posts;
+    }
+
     private function hydrate(WP_Post $post): Store
     {
+        $thumbnailUrl = (string) get_the_post_thumbnail_url($post, 'medium');
+
         return new Store(
             id: $post->ID,
             name: get_the_title($post),
+            description: (string) $post->post_content,
             address: (string) get_post_meta($post->ID, StoreLocation::META_ADDRESS, true),
             city: (string) get_post_meta($post->ID, StoreLocation::META_CITY, true),
             postcode: (string) get_post_meta($post->ID, StoreLocation::META_POSTCODE, true),
             country: (string) get_post_meta($post->ID, StoreLocation::META_COUNTRY, true),
             phone: (string) get_post_meta($post->ID, StoreLocation::META_PHONE, true),
+            email: (string) get_post_meta($post->ID, StoreLocation::META_EMAIL, true),
             hours: (string) get_post_meta($post->ID, StoreLocation::META_HOURS, true),
+            lat: $this->coordinate($post->ID, StoreLocation::META_LAT),
+            lng: $this->coordinate($post->ID, StoreLocation::META_LNG),
+            thumbnailUrl: $thumbnailUrl,
         );
+    }
+
+    /**
+     * Read a coordinate meta value as a nullable float. Returns null when the
+     * meta is absent or not a valid number, so un-geocoded stores stay null.
+     */
+    private function coordinate(int $postId, string $metaKey): ?float
+    {
+        $raw = get_post_meta($postId, $metaKey, true);
+
+        if ('' === $raw || null === $raw || ! is_numeric($raw)) {
+            return null;
+        }
+
+        return (float) $raw;
     }
 }
