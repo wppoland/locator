@@ -24,6 +24,8 @@ No. Locator is self-contained and renders a searchable list with no external map
 **Does the directory work without JavaScript?**
 Yes. Every store is server-rendered, so the list is fully visible; JavaScript only adds instant filtering.
 
+Source, bug reports and pull requests: https://github.com/wppoland/locator
+
 Built by WPPoland — https://plogins.com
 
 License: GPL-2.0-or-later
