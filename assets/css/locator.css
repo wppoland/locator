@@ -11,7 +11,7 @@
   /* Wayfinding palette — map ink, not SaaS blue. */
   --locator-gap: 1.25rem;
   --locator-radius: 14px;
-  --locator-border: rgba(15, 60, 56, 0.16);
+  --locator-border: rgba(15, 60, 56, 0.55);
   --locator-bg: #fff;
   --locator-muted: #5b6470;
   --locator-accent: #0f766e;        /* map-ink teal */
@@ -27,7 +27,7 @@
 
 @media (prefers-color-scheme: dark) {
   .locator {
-    --locator-border: rgba(120, 220, 205, 0.2);
+    --locator-border: rgba(120, 220, 205, 0.55);
     --locator-bg: #161b1a;
     --locator-muted: #9aa8a4;
     --locator-accent: #45c4b0;
