@@ -61,10 +61,21 @@
       updateCount(visible);
     }
 
+    function replant() {
+      // Re-arm the pin-drop / ping animation by restarting the CSS class.
+      root.classList.remove('is-narrowing');
+      // Force reflow so the next add re-triggers the keyframes.
+      void root.offsetWidth;
+      root.classList.add('is-narrowing');
+    }
+
     var debounce;
     input.addEventListener('input', function () {
       window.clearTimeout(debounce);
-      debounce = window.setTimeout(filter, 120);
+      debounce = window.setTimeout(function () {
+        filter();
+        replant();
+      }, 120);
     });
 
     // Run once in case the field is pre-filled (e.g. browser restore).
