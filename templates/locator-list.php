@@ -71,6 +71,11 @@ $locator_count_id = wp_unique_id('locator-count-');
                 <li class="locator__item" data-locator-item
                     data-locator-haystack="<?php echo esc_attr($locator_store->searchHaystack()); ?>">
                     <article class="locator__card">
+                        <span class="locator__pin" data-locator-pin aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+                                <path d="M12 2a7 7 0 0 0-7 7c0 4.8 6.2 12.2 6.5 12.5a.7.7 0 0 0 1 0C12.8 21.2 19 13.8 19 9a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" />
+                            </svg>
+                        </span>
                         <div class="locator__body">
                             <h3 class="locator__name"><?php echo esc_html($locator_store->name); ?></h3>
 
