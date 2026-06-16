@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-14T22:03:22+00:00\n"
+"POT-Creation-Date: 2026-06-16T20:24:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: locator\n"
@@ -57,130 +57,186 @@ msgstr ""
 msgid "Store Locator"
 msgstr ""
 
-#: src/Admin/Settings.php:98
+#: src/Admin/Settings.php:99
 msgid "Address"
 msgstr ""
 
-#: src/Admin/Settings.php:99
-#: src/PostType/StoreLocation.php:160
-#: templates/locator-list.php:94
+#: src/Admin/Settings.php:100
+msgid "Adds the street, postcode, city and country block to each card."
+msgstr ""
+
+#: src/Admin/Settings.php:103
+#: src/PostType/StoreLocation.php:172
+#: templates/locator-list.php:99
 msgid "Opening hours"
 msgstr ""
 
-#: src/Admin/Settings.php:100
-#: src/PostType/StoreLocation.php:112
-#: src/PostType/StoreLocation.php:159
-msgid "Phone"
+#: src/Admin/Settings.php:104
+msgid "Shows the hours you entered for the store, so customers know when to visit."
 msgstr ""
 
 #: src/Admin/Settings.php:107
+#: src/PostType/StoreLocation.php:121
+#: src/PostType/StoreLocation.php:168
+msgid "Phone"
+msgstr ""
+
+#: src/Admin/Settings.php:108
+msgid "Shows a click-to-call number — tapping it dials the store on mobile."
+msgstr ""
+
+#: src/Admin/Settings.php:116
 msgid "Show customers where to find you"
 msgstr ""
 
-#: src/Admin/Settings.php:109
+#: src/Admin/Settings.php:118
 msgid "Add your physical stores under WooCommerce → Store Locations, then place the shortcode below on any page to render a searchable, accessible directory your customers can filter by city, postcode or name."
 msgstr ""
 
 #. translators: %s: the [locator] shortcode wrapped in <code>.
-#: src/Admin/Settings.php:115
+#: src/Admin/Settings.php:124
 #, php-format
 msgid "Add the %s shortcode to a page to display your locations."
 msgstr ""
 
-#: src/Admin/Settings.php:126
-msgid "Display"
+#: src/Admin/Settings.php:135
+msgid "Search"
 msgstr ""
 
-#: src/Admin/Settings.php:130
+#: src/Admin/Settings.php:137
+msgid "Help customers narrow a long list to the store nearest them."
+msgstr ""
+
+#: src/Admin/Settings.php:142
 msgid "Search box"
 msgstr ""
 
-#: src/Admin/Settings.php:136
+#: src/Admin/Settings.php:148
 msgid "Show the search box above the results."
 msgstr ""
 
-#: src/Admin/Settings.php:139
-msgid "Visitors can instantly filter locations by city, postcode or name. Filtering happens in the browser — no data leaves the page."
+#: src/Admin/Settings.php:151
+msgid "Visitors filter locations as they type, by city, postcode or name. Filtering happens in the browser, so no data leaves the page. Leave off if you only list a handful of stores."
 msgstr ""
 
-#: src/Admin/Settings.php:148
+#: src/Admin/Settings.php:160
 msgid "Fields shown on each card"
 msgstr ""
 
-#: src/Admin/Settings.php:150
-msgid "The store name is always shown. Pick which extra details appear beneath it."
+#: src/Admin/Settings.php:162
+msgid "The store name is always shown. Choose which extra details appear beneath it — each one is only rendered when that store actually has a value."
 msgstr ""
 
-#: src/Admin/Settings.php:155
-#: src/Admin/Settings.php:159
+#: src/Admin/Settings.php:167
+#: src/Admin/Settings.php:171
 msgid "Visible fields"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:60
-#: src/PostType/StoreLocation.php:62
-#: src/PostType/StoreLocation.php:68
-msgid "Store Locations"
+#: src/Admin/Settings.php:195
+msgid "Example card"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:61
-msgid "Store Location"
+#: src/Admin/Settings.php:203
+msgid "Riverside Store"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:63
-msgid "Add Location"
+#: src/Admin/Settings.php:205
+msgid "12 Mill Lane, EC1A 1BB London"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:64
-msgid "Add Store Location"
+#: src/Admin/Settings.php:208
+msgid "Mon–Sat 9:00–18:00"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:65
-msgid "New Store Location"
+#: src/Admin/Settings.php:211
+msgid "+44 20 7946 0000"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:66
-msgid "Edit Store Location"
-msgstr ""
-
-#: src/PostType/StoreLocation.php:67
-msgid "View Store Location"
+#: src/Admin/Settings.php:216
+msgid "A live page also adds your search box and shows every store that matches."
 msgstr ""
 
 #: src/PostType/StoreLocation.php:69
-msgid "Search store locations"
+#: src/PostType/StoreLocation.php:71
+#: src/PostType/StoreLocation.php:77
+msgid "Store Locations"
 msgstr ""
 
 #: src/PostType/StoreLocation.php:70
+msgid "Store Location"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:72
+msgid "Add Location"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:73
+msgid "Add Store Location"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:74
+msgid "New Store Location"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:75
+msgid "Edit Store Location"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:76
+msgid "View Store Location"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:78
+msgid "Search store locations"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:79
 msgid "No store locations found."
 msgstr ""
 
-#: src/PostType/StoreLocation.php:71
+#: src/PostType/StoreLocation.php:80
 msgid "No store locations in Trash."
 msgstr ""
 
-#: src/PostType/StoreLocation.php:111
-#: src/PostType/StoreLocation.php:156
+#: src/PostType/StoreLocation.php:120
+#: src/PostType/StoreLocation.php:165
 msgid "City"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:142
+#: src/PostType/StoreLocation.php:151
 msgid "Location details"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:155
+#: src/PostType/StoreLocation.php:164
 msgid "Street address"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:157
+#: src/PostType/StoreLocation.php:166
 msgid "Postcode / ZIP"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:158
+#: src/PostType/StoreLocation.php:167
 msgid "Country"
 msgstr ""
 
-#: src/PostType/StoreLocation.php:179
+#: src/PostType/StoreLocation.php:169
+msgid "Email"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:170
+msgid "Latitude"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:171
+msgid "Longitude"
+msgstr ""
+
+#: src/PostType/StoreLocation.php:191
 msgid "One line per day, e.g. \"Mon–Fri: 9:00–18:00\"."
+msgstr ""
+
+#: src/PostType/StoreLocation.php:201
+msgid "Optional. Enter latitude and longitude as decimal degrees (e.g. 52.2297, 21.0122) to place this location on a map."
 msgstr ""
 
 #: src/Service/Locator.php:95
