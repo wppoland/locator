@@ -95,9 +95,18 @@ final class Settings implements HasHooks
         $fields = is_array($settings['fields'] ?? null) ? $settings['fields'] : [];
 
         $fieldLabels = [
-            'address' => __('Address', 'locator'),
-            'hours'   => __('Opening hours', 'locator'),
-            'phone'   => __('Phone', 'locator'),
+            'address' => [
+                'label' => __('Address', 'locator'),
+                'help'  => __('Adds the street, postcode, city and country block to each card.', 'locator'),
+            ],
+            'hours'   => [
+                'label' => __('Opening hours', 'locator'),
+                'help'  => __('Shows the hours you entered for the store, so customers know when to visit.', 'locator'),
+            ],
+            'phone'   => [
+                'label' => __('Phone', 'locator'),
+                'help'  => __('Shows a click-to-call number — tapping it dials the store on mobile.', 'locator'),
+            ],
         ];
         ?>
         <div class="wrap locator-admin">
@@ -108,7 +117,7 @@ final class Settings implements HasHooks
                 <p>
                     <?php esc_html_e('Add your physical stores under WooCommerce → Store Locations, then place the shortcode below on any page to render a searchable, accessible directory your customers can filter by city, postcode or name.', 'locator'); ?>
                 </p>
-                <p>
+                <p class="locator-shortcode-hint">
                     <?php
                     printf(
                         /* translators: %s: the [locator] shortcode wrapped in <code>. */
@@ -123,7 +132,10 @@ final class Settings implements HasHooks
                 <?php settings_fields(self::GROUP); ?>
 
                 <div class="locator-card">
-                    <h2><?php esc_html_e('Display', 'locator'); ?></h2>
+                    <h2 class="locator-card__title"><?php esc_html_e('Search', 'locator'); ?></h2>
+                    <p class="locator-card__intro">
+                        <?php esc_html_e('Help customers narrow a long list to the store nearest them.', 'locator'); ?>
+                    </p>
                     <table class="form-table" role="presentation">
                         <tbody>
                             <tr>
@@ -136,7 +148,7 @@ final class Settings implements HasHooks
                                         <?php esc_html_e('Show the search box above the results.', 'locator'); ?>
                                     </label>
                                     <p class="description">
-                                        <?php esc_html_e('Visitors can instantly filter locations by city, postcode or name. Filtering happens in the browser — no data leaves the page.', 'locator'); ?>
+                                        <?php esc_html_e('Visitors filter locations as they type, by city, postcode or name. Filtering happens in the browser, so no data leaves the page. Leave off if you only list a handful of stores.', 'locator'); ?>
                                     </p>
                                 </td>
                             </tr>
@@ -145,9 +157,9 @@ final class Settings implements HasHooks
                 </div>
 
                 <div class="locator-card">
-                    <h2><?php esc_html_e('Fields shown on each card', 'locator'); ?></h2>
-                    <p class="description">
-                        <?php esc_html_e('The store name is always shown. Pick which extra details appear beneath it.', 'locator'); ?>
+                    <h2 class="locator-card__title"><?php esc_html_e('Fields shown on each card', 'locator'); ?></h2>
+                    <p class="locator-card__intro">
+                        <?php esc_html_e('The store name is always shown. Choose which extra details appear beneath it — each one is only rendered when that store actually has a value.', 'locator'); ?>
                     </p>
                     <table class="form-table" role="presentation">
                         <tbody>
@@ -158,21 +170,52 @@ final class Settings implements HasHooks
                                         <legend class="screen-reader-text">
                                             <?php esc_html_e('Visible fields', 'locator'); ?>
                                         </legend>
-                                        <?php foreach ($fieldLabels as $key => $label) :
+                                        <?php foreach ($fieldLabels as $key => $field) :
                                             $id = 'locator_field_' . sanitize_key($key);
                                             ?>
-                                            <label for="<?php echo esc_attr($id); ?>" class="locator-checkbox-row">
-                                                <input type="checkbox" id="<?php echo esc_attr($id); ?>"
-                                                    name="<?php echo esc_attr(self::OPTION); ?>[fields][<?php echo esc_attr($key); ?>]"
-                                                    value="1" <?php checked((bool) ($fields[$key] ?? false), true); ?> />
-                                                <?php echo esc_html($label); ?>
-                                            </label><br />
+                                            <div class="locator-field-row">
+                                                <label for="<?php echo esc_attr($id); ?>" class="locator-checkbox-row">
+                                                    <input type="checkbox" id="<?php echo esc_attr($id); ?>"
+                                                        name="<?php echo esc_attr(self::OPTION); ?>[fields][<?php echo esc_attr($key); ?>]"
+                                                        value="1" <?php checked((bool) ($fields[$key] ?? false), true); ?> />
+                                                    <span class="locator-field-row__label"><?php echo esc_html($field['label']); ?></span>
+                                                </label>
+                                                <p class="description locator-field-row__help">
+                                                    <?php echo esc_html($field['help']); ?>
+                                                </p>
+                                            </div>
                                         <?php endforeach; ?>
                                     </fieldset>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <div class="locator-preview" aria-hidden="true">
+                        <span class="locator-preview__label"><?php esc_html_e('Example card', 'locator'); ?></span>
+                        <div class="locator-preview__card">
+                            <span class="locator-preview__pin">
+                                <svg viewBox="0 0 24 24" width="18" height="18" focusable="false" aria-hidden="true">
+                                    <path d="M12 2a7 7 0 0 0-7 7c0 4.8 6.2 12.2 6.5 12.5a.7.7 0 0 0 1 0C12.8 21.2 19 13.8 19 9a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" />
+                                </svg>
+                            </span>
+                            <div class="locator-preview__body">
+                                <strong class="locator-preview__name"><?php esc_html_e('Riverside Store', 'locator'); ?></strong>
+                                <?php if (! empty($fields['address'])) : ?>
+                                    <span class="locator-preview__line"><?php esc_html_e('12 Mill Lane, EC1A 1BB London', 'locator'); ?></span>
+                                <?php endif; ?>
+                                <?php if (! empty($fields['hours'])) : ?>
+                                    <span class="locator-preview__line"><?php esc_html_e('Mon–Sat 9:00–18:00', 'locator'); ?></span>
+                                <?php endif; ?>
+                                <?php if (! empty($fields['phone'])) : ?>
+                                    <span class="locator-preview__line locator-preview__line--accent"><?php esc_html_e('+44 20 7946 0000', 'locator'); ?></span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <p class="description locator-preview__note">
+                            <?php esc_html_e('A live page also adds your search box and shows every store that matches.', 'locator'); ?>
+                        </p>
+                    </div>
                 </div>
 
                 <?php submit_button(); ?>
