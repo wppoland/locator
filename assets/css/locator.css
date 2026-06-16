@@ -1,17 +1,25 @@
 /* ==========================================================================
-   Locator — storefront directory
-   Accessible, theme-friendly, no layout shift. Uses CSS custom properties so
-   themes can re-skin without overriding every rule.
+   Locator — storefront store-finder directory
+   Wayfinding world: each card is a plotted location. The accent is map-ink
+   teal (not default blue); the signature moment is a pin that drops and plants
+   onto its card, the way you drop a pin on a map. Theme-friendly tokens,
+   zero layout shift, vanilla JS. Reserve all space up front — pins animate
+   transform/opacity only, never reflow.
    ========================================================================== */
 
 .locator {
+  /* Wayfinding palette — map ink, not SaaS blue. */
   --locator-gap: 1.25rem;
-  --locator-radius: 12px;
-  --locator-border: rgba(0, 0, 0, 0.1);
+  --locator-radius: 14px;
+  --locator-border: rgba(15, 60, 56, 0.16);
   --locator-bg: #fff;
   --locator-muted: #5b6470;
-  --locator-accent: #2563eb;
-  --locator-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --locator-accent: #0f766e;        /* map-ink teal */
+  --locator-accent-soft: rgba(15, 118, 110, 0.12);
+  --locator-pin: #0f766e;
+  --locator-grid: rgba(15, 118, 110, 0.14);
+  --locator-shadow: 0 1px 2px rgba(15, 60, 56, 0.06);
+  --locator-drop: 220ms cubic-bezier(0.2, 1.2, 0.3, 1);
 
   margin: 1.5rem 0;
   color: inherit;
@@ -19,10 +27,13 @@
 
 @media (prefers-color-scheme: dark) {
   .locator {
-    --locator-border: rgba(255, 255, 255, 0.14);
-    --locator-bg: #1c1f24;
-    --locator-muted: #9aa4b2;
-    --locator-accent: #6ea8fe;
+    --locator-border: rgba(120, 220, 205, 0.2);
+    --locator-bg: #161b1a;
+    --locator-muted: #9aa8a4;
+    --locator-accent: #45c4b0;
+    --locator-accent-soft: rgba(69, 196, 176, 0.16);
+    --locator-pin: #5fd3bf;
+    --locator-grid: rgba(69, 196, 176, 0.18);
     --locator-shadow: none;
   }
 }
@@ -58,10 +69,36 @@
   border-color: var(--locator-accent);
 }
 
+/* Count reads like a map readout: a small wayfinding dot leads the line. */
 .locator__count {
-  margin: 0.5rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.55rem 0 0;
   font-size: 0.875rem;
   color: var(--locator-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.locator__count::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--locator-accent);
+  box-shadow: 0 0 0 0 var(--locator-accent-soft);
+  flex: none;
+}
+
+/* When the result set changes, the dot pulses once like a "you are here" ping. */
+.locator.is-narrowing .locator__count::before {
+  animation: locator-ping 520ms ease-out;
+}
+
+@keyframes locator-ping {
+  0%   { box-shadow: 0 0 0 0 var(--locator-accent-soft); }
+  70%  { box-shadow: 0 0 0 0.5rem rgba(15, 118, 110, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); }
 }
 
 .locator__noresults {
@@ -88,21 +125,74 @@
   margin: 0;
 }
 
+/* Each card is a plotted location: a faint map-grid baseline runs under it,
+   and a pin sits planted in the top-left gutter. */
 .locator__card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   height: 100%;
-  padding: 1.1rem 1.25rem;
+  padding: 1.15rem 1.25rem 1.15rem 3.1rem;
   border: 1px solid var(--locator-border);
   border-radius: var(--locator-radius);
-  background: var(--locator-bg);
+  background:
+    linear-gradient(var(--locator-bg), var(--locator-bg)) padding-box,
+    repeating-linear-gradient(
+      to right,
+      var(--locator-grid) 0 1px,
+      transparent 1px 22px
+    ) bottom / 100% 3px no-repeat;
   box-shadow: var(--locator-shadow);
 }
 
+/* ── The signature moment: the pin drops and plants. ─────────────────── */
+
+.locator__pin {
+  position: absolute;
+  top: 1.05rem;
+  left: 1rem;
+  display: inline-flex;
+  color: var(--locator-pin);
+  /* Pivot at the tip so it lands like a real pin. */
+  transform-origin: 50% 95%;
+}
+
+.locator__pin svg {
+  display: block;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 1px rgba(15, 60, 56, 0.25));
+}
+
+/* A small shadow blot the pin lands on — sells the "planted" weight. */
+.locator__pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.28rem;
+  width: 0.7rem;
+  height: 0.2rem;
+  transform: translateX(-50%) scaleX(0.6);
+  border-radius: 50%;
+  background: var(--locator-accent-soft);
+}
+
+/* On a fresh narrow, matching cards re-plant their pins in a quick cascade. */
+.locator.is-narrowing [data-locator-item]:not([hidden]) .locator__pin {
+  animation: locator-drop var(--locator-drop) both;
+}
+
+@keyframes locator-drop {
+  0%   { transform: translateY(-0.9rem) scale(0.85); opacity: 0; }
+  60%  { transform: translateY(0.08rem) scale(1.04); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .locator__search-input {
-    transition: none;
+  .locator__search-input { transition: none; }
+  .locator.is-narrowing .locator__count::before { animation: none; }
+  .locator.is-narrowing [data-locator-item]:not([hidden]) .locator__pin {
+    animation: none;
   }
 }
 
