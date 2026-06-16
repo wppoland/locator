@@ -1,46 +1,161 @@
 /* ==========================================================================
    Locator — admin settings + store editor polish
+
+   Accent matches the storefront map-ink teal (--locator-accent #0f766e) for
+   family consistency. Contrast against the wp-admin surface is COMPUTED:
+   #0f766e on #fff = 5.47:1, on #f0f0f1 = 4.81:1 → passes WCAG AA for text
+   (>=4.5:1) and UI (>=3:1). Used only for headings/rules/links, never as a
+   large fill behind small text.
    ========================================================================== */
+
+.locator-admin {
+  --locator-admin-accent: #0f766e;
+  --locator-admin-accent-soft: rgba(15, 118, 110, 0.1);
+  --locator-admin-border: #dcdcde;
+  --locator-admin-surface: #fff;
+  --locator-admin-muted: #50575e;
+}
 
 .locator-admin .locator-intro,
 .locator-admin .locator-card {
   max-width: 760px;
   margin: 1rem 0;
-  padding: 1rem 1.25rem;
-  background: #fff;
-  border: 1px solid #dcdcde;
+  padding: 1.25rem 1.5rem;
+  background: var(--locator-admin-surface);
+  border: 1px solid var(--locator-admin-border);
   border-radius: 8px;
 }
 
+/* Intro carries the one restrained distinctive touch: a teal edge that ties
+   the screen to the storefront pin colour. */
+.locator-admin .locator-intro {
+  border-left: 4px solid var(--locator-admin-accent);
+}
+
 .locator-admin .locator-intro h2,
-.locator-admin .locator-card h2 {
+.locator-admin .locator-card__title {
   margin-top: 0;
+  margin-bottom: 0.35rem;
+  font-size: 1.05rem;
+}
+
+.locator-admin .locator-card__intro {
+  margin-top: 0;
+  color: var(--locator-admin-muted);
 }
 
 .locator-admin .locator-intro code,
-.locator-admin .locator-card code {
+.locator-admin .locator-card code,
+.locator-admin .locator-shortcode-hint code {
   background: #f0f0f1;
-  padding: 0.1em 0.4em;
+  padding: 0.1em 0.45em;
   border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Field rows: each toggle gets its own help line explaining the effect. */
+.locator-admin .locator-field-row {
+  margin-bottom: 0.85rem;
+}
+
+.locator-admin .locator-field-row:last-child {
+  margin-bottom: 0;
 }
 
 .locator-admin .locator-checkbox-row {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 0.35rem;
+  gap: 0.45rem;
+}
+
+.locator-admin .locator-field-row__label {
+  font-weight: 600;
+}
+
+.locator-admin .locator-field-row__help {
+  margin: 0.15rem 0 0 1.7rem;
+  max-width: 46ch;
+}
+
+/* Example card — show, don't just toggle. Mirrors the storefront card so the
+   merchant sees the effect of each field before saving. */
+.locator-admin .locator-preview {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--locator-admin-border);
+}
+
+.locator-admin .locator-preview__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--locator-admin-muted);
+}
+
+.locator-admin .locator-preview__card {
+  display: flex;
+  gap: 0.65rem;
+  max-width: 320px;
+  padding: 0.9rem 1rem;
+  background: var(--locator-admin-accent-soft);
+  border: 1px solid var(--locator-admin-border);
+  border-radius: 8px;
+}
+
+.locator-admin .locator-preview__pin {
+  flex: 0 0 auto;
+  color: var(--locator-admin-accent);
+  line-height: 0;
+}
+
+.locator-admin .locator-preview__pin svg {
+  fill: currentColor;
+}
+
+.locator-admin .locator-preview__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.locator-admin .locator-preview__name {
+  font-size: 0.95rem;
+}
+
+.locator-admin .locator-preview__line {
+  font-size: 0.82rem;
+  color: var(--locator-admin-muted);
+}
+
+.locator-admin .locator-preview__line--accent {
+  color: var(--locator-admin-accent);
+}
+
+.locator-admin .locator-preview__note {
+  margin: 0.6rem 0 0;
 }
 
 @media (prefers-color-scheme: dark) {
+  .locator-admin {
+    /* #45c4b0 on #1e1e1e = 8.0:1 text / clears AA; mirrors storefront dark accent. */
+    --locator-admin-accent: #45c4b0;
+    --locator-admin-accent-soft: rgba(69, 196, 176, 0.14);
+    --locator-admin-border: #3c3c3c;
+    --locator-admin-surface: #1e1e1e;
+    --locator-admin-muted: #b5b5b5;
+  }
+
   .locator-admin .locator-intro,
   .locator-admin .locator-card {
-    background: #1e1e1e;
-    border-color: #3c3c3c;
     color: #e0e0e0;
   }
 
   .locator-admin .locator-intro code,
-  .locator-admin .locator-card code {
+  .locator-admin .locator-card code,
+  .locator-admin .locator-shortcode-hint code {
     background: #2a2a2a;
     color: #e0e0e0;
   }
