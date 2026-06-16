@@ -58,11 +58,18 @@ No. Locator renders a searchable list of cards, not a map, so it needs no map ke
 
 The store name is always shown. You can toggle address, opening hours and phone in the settings.
 
+= How does the search box work? =
+
+The `[locator]` shortcode filters location cards client-side as the shopper types.
+
+= Can I add stores without custom code? =
+
+Yes. Add locations under **WooCommerce → Store Locations** and place `[locator]` on any page.
+
 == Screenshots ==
 
 1. The searchable storefront directory.
-2. Managing a store location in the admin.
-3. The Store Locator settings page.
+2. The Store Locator settings page.
 
 == Changelog ==
 
