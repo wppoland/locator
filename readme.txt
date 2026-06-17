@@ -71,6 +71,12 @@ Yes. Add locations under **WooCommerce → Store Locations** and place `[locator
 1. The searchable storefront directory.
 2. The Store Locator settings page.
 
+== External Services ==
+
+Locator does not connect to any external service. It registers no remote API, sends no HTTP request, and loads no third-party script, font, map or tile. Your store data never leaves your site.
+
+Every location is stored on your own server as a `locator_store` post, with its address, city, postcode, country, phone, opening hours, email and any latitude/longitude kept in that post's meta. Settings live in the `locator_settings` option. Coordinates are typed in by hand on the location screen — nothing is geocoded against an outside provider. The storefront search filters cards in the visitor's browser, so no request is made while typing, and the plugin sends no email.
+
 == Changelog ==
 
 = 0.1.0 =
