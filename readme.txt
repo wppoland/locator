@@ -46,6 +46,15 @@ Source and issues: https://github.com/wppoland/locator
 
 == Frequently Asked Questions ==
 
+= Documentation and links =
+
+* **Documentation** - https://plogins.com/locator/docs/
+* **Plugin page** - https://plogins.com/locator/
+* **Source code** - https://github.com/wppoland/locator
+* **Bug reports and feature requests** - https://github.com/wppoland/locator/issues
+* **Discussions and questions** - https://github.com/wppoland/locator/discussions
+
+
 = Does it require WooCommerce? =
 
 Yes. Locator registers under the WooCommerce menu and requires WooCommerce to be active.
