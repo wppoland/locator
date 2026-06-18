@@ -1,5 +1,5 @@
 === Locator - Store Locator for WooCommerce ===
-Contributors: wppoland
+Contributors: motylanogha
 Tags: woocommerce, store locator, store finder, locations, shortcode
 Requires at least: 6.5
 Tested up to: 7.0
