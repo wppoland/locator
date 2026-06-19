@@ -72,6 +72,44 @@ final class Locator implements HasHooks
     }
 
     /**
+     * @param list<array<string, mixed>> $raw
+     * @return list<array{label: string, stores: list<\Locator\Model\Store>}>
+     */
+    private function normalizeStoreGroups(array $raw): array
+    {
+        $groups = [];
+
+        foreach ($raw as $group) {
+            if (! is_array($group)) {
+                continue;
+            }
+
+            $stores = $group['stores'] ?? [];
+            if (! is_array($stores) || $stores === []) {
+                continue;
+            }
+
+            $resolved = [];
+            foreach ($stores as $store) {
+                if ($store instanceof \Locator\Model\Store) {
+                    $resolved[] = $store;
+                }
+            }
+
+            if ($resolved === []) {
+                continue;
+            }
+
+            $groups[] = [
+                'label'  => isset($group['label']) ? (string) $group['label'] : '',
+                'stores' => $resolved,
+            ];
+        }
+
+        return $groups;
+    }
+
+    /**
      * Render the [locator] shortcode.
      *
      * @param array<string, mixed>|string $atts
@@ -88,11 +126,24 @@ final class Locator implements HasHooks
         /** @var array<string, bool> $fields */
         $fields = is_array($settings['fields'] ?? null) ? $settings['fields'] : [];
 
+        /** @var list<array{label: string, stores: list<\Locator\Model\Store>}>|null $storeGroups */
+        $storeGroups = apply_filters('locator/store_groups', null, $stores);
+
+        if (! is_array($storeGroups) || $storeGroups === []) {
+            $storeGroups = null;
+        } else {
+            $storeGroups = $this->normalizeStoreGroups($storeGroups);
+            if ($storeGroups === []) {
+                $storeGroups = null;
+            }
+        }
+
         return $this->templates->render('locator-list', [
-            'stores'      => $stores,
-            'show_search' => ! empty($settings['show_search']),
-            'fields'      => $fields,
-            'empty_text'  => __('No store locations have been added yet.', 'locator'),
+            'stores'       => $stores,
+            'store_groups' => $storeGroups,
+            'show_search'  => ! empty($settings['show_search']),
+            'fields'       => $fields,
+            'empty_text'   => __('No store locations have been added yet.', 'locator'),
         ]);
     }
 }

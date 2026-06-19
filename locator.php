@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Plugin Name:       Locator - Store Locator for WooCommerce
  * Plugin URI:        https://plogins.com/locator/
  * Description:        Show your physical store locations with a searchable list customers can filter by area.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Tested up to:      7.0
@@ -28,7 +28,7 @@ namespace Locator;
 
 defined('ABSPATH') || exit;
 
-const VERSION         = '0.1.0';
+const VERSION         = '0.1.1';
 const PLUGIN_FILE     = __FILE__;
 const PLUGIN_DIR      = __DIR__;
 const MIN_PHP_VERSION = '8.1.0';

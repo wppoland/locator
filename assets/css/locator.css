@@ -238,3 +238,14 @@
 .locator__contact a:focus-visible {
   text-decoration: underline;
 }
+
+.locator__group + .locator__group {
+  margin-top: 2rem;
+}
+
+.locator__group-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  line-height: 1.35;
+  color: var(--locator-accent);
+}

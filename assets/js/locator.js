@@ -54,6 +54,19 @@
         }
       });
 
+      var groups = Array.prototype.slice.call(
+        root.querySelectorAll('[data-locator-group]')
+      );
+      groups.forEach(function (group) {
+        var groupItems = Array.prototype.slice.call(
+          group.querySelectorAll('[data-locator-item]')
+        );
+        var anyVisible = groupItems.some(function (item) {
+          return !item.hidden;
+        });
+        group.hidden = query !== '' && !anyVisible;
+      });
+
       if (noResults) {
         noResults.hidden = visible !== 0;
       }
