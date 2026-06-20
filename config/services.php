@@ -15,6 +15,7 @@ use Locator\Migrator;
 use Locator\PostType\StoreLocation;
 use Locator\Repository\StoreRepository;
 use Locator\Service\Locator;
+use Locator\Service\StoreWriter;
 use Locator\Util\TemplateLoader;
 
 defined('ABSPATH') || exit;
@@ -23,6 +24,7 @@ return static function (Container $c): void {
     // Infrastructure.
     $c->singleton(Migrator::class, static fn (): Migrator => new Migrator());
     $c->singleton(StoreRepository::class, static fn (): StoreRepository => new StoreRepository());
+    $c->singleton(StoreWriter::class, static fn (): StoreWriter => new StoreWriter());
     $c->singleton(TemplateLoader::class, static fn (): TemplateLoader => new TemplateLoader());
 
     // The custom post type is needed in both admin and front-end contexts.
