@@ -93,15 +93,21 @@ final class StoreLocation implements HasHooks
                 'supports'            => ['title', 'editor', 'thumbnail', 'page-attributes'],
                 'capability_type'     => 'post',
                 'map_meta_cap'        => true,
+                // Map only the primitive caps to manage_woocommerce. The meta
+                // caps (edit_post/read_post/delete_post) must be left for
+                // map_meta_cap to derive against a specific post. Mapping a meta
+                // cap onto a primitive turns manage_woocommerce itself into a
+                // post-context meta cap, so every plain
+                // current_user_can('manage_woocommerce') resolves to
+                // do_not_allow and admins lose the whole WooCommerce menu.
                 'capabilities'        => [
-                    'edit_post'          => 'manage_woocommerce',
-                    'read_post'          => 'manage_woocommerce',
-                    'delete_post'        => 'manage_woocommerce',
-                    'edit_posts'         => 'manage_woocommerce',
-                    'edit_others_posts'  => 'manage_woocommerce',
-                    'publish_posts'      => 'manage_woocommerce',
-                    'read_private_posts' => 'manage_woocommerce',
-                    'create_posts'       => 'manage_woocommerce',
+                    'edit_posts'          => 'manage_woocommerce',
+                    'edit_others_posts'   => 'manage_woocommerce',
+                    'publish_posts'       => 'manage_woocommerce',
+                    'read_private_posts'  => 'manage_woocommerce',
+                    'create_posts'        => 'manage_woocommerce',
+                    'delete_posts'        => 'manage_woocommerce',
+                    'delete_others_posts' => 'manage_woocommerce',
                 ],
             ],
         );
