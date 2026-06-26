@@ -59,7 +59,7 @@ final class Settings implements HasHooks
     {
         add_submenu_page(
             'woocommerce',
-            __('Locator — Store Locator', 'locator'),
+            __('Locator: Store Locator', 'locator'),
             __('Store Locator', 'locator'),
             'manage_woocommerce',
             self::PAGE,
@@ -105,7 +105,7 @@ final class Settings implements HasHooks
             ],
             'phone'   => [
                 'label' => __('Phone', 'locator'),
-                'help'  => __('Shows a click-to-call number — tapping it dials the store on mobile.', 'locator'),
+                'help'  => __('Shows a click-to-call number, tapping it dials the store on mobile.', 'locator'),
             ],
         ];
         ?>
@@ -159,7 +159,7 @@ final class Settings implements HasHooks
                 <div class="locator-card">
                     <h2 class="locator-card__title"><?php esc_html_e('Fields shown on each card', 'locator'); ?></h2>
                     <p class="locator-card__intro">
-                        <?php esc_html_e('The store name is always shown. Choose which extra details appear beneath it — each one is only rendered when that store actually has a value.', 'locator'); ?>
+                        <?php esc_html_e('The store name is always shown. Choose which extra details appear beneath it, each one is only rendered when that store actually has a value.', 'locator'); ?>
                     </p>
                     <table class="form-table" role="presentation">
                         <tbody>

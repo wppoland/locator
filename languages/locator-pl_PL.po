@@ -57,8 +57,8 @@ msgid "Locator requires WooCommerce to be installed and activated."
 msgstr "Wtyczka Locator wymaga zainstalowanej i aktywnej wtyczki WooCommerce."
 
 #: src/Admin/Settings.php:62
-msgid "Locator — Store Locator"
-msgstr "Locator — Wyszukiwarka sklepów"
+msgid "Locator: Store Locator"
+msgstr "Locator: Wyszukiwarka sklepów"
 
 #: src/Admin/Settings.php:63
 msgid "Store Locator"
@@ -88,7 +88,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: src/Admin/Settings.php:108
-msgid "Shows a click-to-call number — tapping it dials the store on mobile."
+msgid "Shows a click-to-call number, tapping it dials the store on mobile."
 msgstr ""
 
 #: src/Admin/Settings.php:116
@@ -142,7 +142,7 @@ msgstr "Pola wyświetlane na każdej karcie"
 #: src/Admin/Settings.php:162
 msgid ""
 "The store name is always shown. Choose which extra details appear beneath it "
-"— each one is only rendered when that store actually has a value."
+", each one is only rendered when that store actually has a value."
 msgstr ""
 
 #: src/Admin/Settings.php:167 src/Admin/Settings.php:171
