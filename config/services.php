@@ -10,6 +10,7 @@
 declare(strict_types=1);
 
 use Locator\Admin\Settings;
+use Locator\Admin\StoreListSearch;
 use Locator\Container;
 use Locator\Migrator;
 use Locator\PostType\StoreLocation;
@@ -33,6 +34,9 @@ return static function (Container $c): void {
     // Settings is resolved both in admin (its own page) and on the front end
     // (the shortcode reads the visible-fields config), so register it unconditionally.
     $c->singleton(Settings::class, static fn (): Settings => new Settings());
+
+    // Admin-only: extend the Store Locations list search to match location meta.
+    $c->singleton(StoreListSearch::class, static fn (): StoreListSearch => new StoreListSearch());
 
     // Front-end directory service.
     $c->singleton(Locator::class, static fn (): Locator => new Locator(

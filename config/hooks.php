@@ -14,6 +14,7 @@
 declare(strict_types=1);
 
 use Locator\Admin\Settings;
+use Locator\Admin\StoreListSearch;
 use Locator\PostType\StoreLocation;
 use Locator\Service\Locator;
 
@@ -23,6 +24,7 @@ return is_admin()
     ? [
         StoreLocation::class,
         Settings::class,
+        StoreListSearch::class,
         Locator::class,
     ]
     : [
