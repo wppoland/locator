@@ -143,7 +143,7 @@ final class Locator implements HasHooks
             'store_groups' => $storeGroups,
             'show_search'  => ! empty($settings['show_search']),
             'fields'       => $fields,
-            'empty_text'   => __('No store locations have been added yet.', 'locator'),
+            'empty_text'   => __('No store locations have been added yet.', 'plogins-locator'),
         ]);
     }
 }

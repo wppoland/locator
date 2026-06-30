@@ -66,18 +66,18 @@ final class StoreLocation implements HasHooks
             self::POST_TYPE,
             [
                 'labels'              => [
-                    'name'               => __('Store Locations', 'locator'),
-                    'singular_name'      => __('Store Location', 'locator'),
-                    'menu_name'          => __('Store Locations', 'locator'),
-                    'add_new'            => __('Add Location', 'locator'),
-                    'add_new_item'       => __('Add Store Location', 'locator'),
-                    'new_item'           => __('New Store Location', 'locator'),
-                    'edit_item'          => __('Edit Store Location', 'locator'),
-                    'view_item'          => __('View Store Location', 'locator'),
-                    'all_items'          => __('Store Locations', 'locator'),
-                    'search_items'       => __('Search store locations', 'locator'),
-                    'not_found'          => __('No store locations found.', 'locator'),
-                    'not_found_in_trash' => __('No store locations in Trash.', 'locator'),
+                    'name'               => __('Store Locations', 'plogins-locator'),
+                    'singular_name'      => __('Store Location', 'plogins-locator'),
+                    'menu_name'          => __('Store Locations', 'plogins-locator'),
+                    'add_new'            => __('Add Location', 'plogins-locator'),
+                    'add_new_item'       => __('Add Store Location', 'plogins-locator'),
+                    'new_item'           => __('New Store Location', 'plogins-locator'),
+                    'edit_item'          => __('Edit Store Location', 'plogins-locator'),
+                    'view_item'          => __('View Store Location', 'plogins-locator'),
+                    'all_items'          => __('Store Locations', 'plogins-locator'),
+                    'search_items'       => __('Search store locations', 'plogins-locator'),
+                    'not_found'          => __('No store locations found.', 'plogins-locator'),
+                    'not_found_in_trash' => __('No store locations in Trash.', 'plogins-locator'),
                 ],
                 'public'              => false,
                 'show_ui'             => true,
@@ -123,8 +123,8 @@ final class StoreLocation implements HasHooks
 
         foreach ($columns as $key => $label) {
             if ('date' === $key) {
-                $reordered['locator_city']  = __('City', 'locator');
-                $reordered['locator_phone'] = __('Phone', 'locator');
+                $reordered['locator_city']  = __('City', 'plogins-locator');
+                $reordered['locator_phone'] = __('Phone', 'plogins-locator');
             }
 
             $reordered[$key] = $label;
@@ -154,7 +154,7 @@ final class StoreLocation implements HasHooks
     {
         add_meta_box(
             'locator_store_details',
-            __('Location details', 'locator'),
+            __('Location details', 'plogins-locator'),
             [$this, 'renderMetaBox'],
             self::POST_TYPE,
             'normal',
@@ -167,15 +167,15 @@ final class StoreLocation implements HasHooks
         wp_nonce_field(self::NONCE_ACTION, self::NONCE_FIELD);
 
         $fields = [
-            self::META_ADDRESS  => [__('Street address', 'locator'), 'textarea'],
-            self::META_CITY     => [__('City', 'locator'), 'text'],
-            self::META_POSTCODE => [__('Postcode / ZIP', 'locator'), 'text'],
-            self::META_COUNTRY  => [__('Country', 'locator'), 'text'],
-            self::META_PHONE    => [__('Phone', 'locator'), 'text'],
-            self::META_EMAIL    => [__('Email', 'locator'), 'text'],
-            self::META_LAT      => [__('Latitude', 'locator'), 'text'],
-            self::META_LNG      => [__('Longitude', 'locator'), 'text'],
-            self::META_HOURS    => [__('Opening hours', 'locator'), 'textarea'],
+            self::META_ADDRESS  => [__('Street address', 'plogins-locator'), 'textarea'],
+            self::META_CITY     => [__('City', 'plogins-locator'), 'text'],
+            self::META_POSTCODE => [__('Postcode / ZIP', 'plogins-locator'), 'text'],
+            self::META_COUNTRY  => [__('Country', 'plogins-locator'), 'text'],
+            self::META_PHONE    => [__('Phone', 'plogins-locator'), 'text'],
+            self::META_EMAIL    => [__('Email', 'plogins-locator'), 'text'],
+            self::META_LAT      => [__('Latitude', 'plogins-locator'), 'text'],
+            self::META_LNG      => [__('Longitude', 'plogins-locator'), 'text'],
+            self::META_HOURS    => [__('Opening hours', 'plogins-locator'), 'textarea'],
         ];
         ?>
         <table class="form-table locator-meta" role="presentation">
@@ -194,7 +194,7 @@ final class StoreLocation implements HasHooks
                                 name="<?php echo esc_attr($metaKey); ?>"><?php echo esc_textarea($value); ?></textarea>
                             <?php if (self::META_HOURS === $metaKey) : ?>
                                 <p class="description">
-                                    <?php esc_html_e('One line per day, e.g. "Mon–Fri: 9:00–18:00".', 'locator'); ?>
+                                    <?php esc_html_e('One line per day, e.g. "Mon–Fri: 9:00–18:00".', 'plogins-locator'); ?>
                                 </p>
                             <?php endif; ?>
                         <?php else : ?>
@@ -204,7 +204,7 @@ final class StoreLocation implements HasHooks
                                 value="<?php echo esc_attr($value); ?>" />
                             <?php if (self::META_LNG === $metaKey) : ?>
                                 <p class="description">
-                                    <?php esc_html_e('Optional. Enter latitude and longitude as decimal degrees (e.g. 52.2297, 21.0122) to place this location on a map.', 'locator'); ?>
+                                    <?php esc_html_e('Optional. Enter latitude and longitude as decimal degrees (e.g. 52.2297, 21.0122) to place this location on a map.', 'plogins-locator'); ?>
                                 </p>
                             <?php endif; ?>
                         <?php endif; ?>

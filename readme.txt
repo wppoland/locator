@@ -1,10 +1,10 @@
-=== Locator - Store Locator for WooCommerce ===
+=== Plogins Locator for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, store locator, store finder, locations, shortcode
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,7 +23,7 @@ visible even with JavaScript turned off. When JavaScript runs, the search box hi
 and shows cards as the visitor types, filtering by city, postcode or store name
 entirely in the browser.
 
-Source and issues: https://github.com/wppoland/locator
+Source and issues: https://github.com/wppoland/plogins-locator
 
 **Features**
 
@@ -48,11 +48,10 @@ Source and issues: https://github.com/wppoland/locator
 
 = Documentation and links =
 
-* **Documentation** - https://plogins.com/locator/docs/
-* **Plugin page** - https://plogins.com/locator/
-* **Source code** - https://github.com/wppoland/locator
-* **Bug reports and feature requests** - https://github.com/wppoland/locator/issues
-* **Discussions and questions** - https://github.com/wppoland/locator/discussions
+* **Documentation** - https://plogins.com/plogins-locator/docs/
+* **Plugin page** - https://plogins.com/plogins-locator/
+* **Source code** - https://github.com/wppoland/plogins-locator
+* **Bug reports and feature requests** - https://github.com/wppoland/plogins-locator/issues
 
 
 = Does it require WooCommerce? =
@@ -87,6 +86,9 @@ Locator does not connect to any external service. It registers no remote API, se
 Every location is stored on your own server as a `locator_store` post, with its address, city, postcode, country, phone, opening hours, email and any latitude/longitude kept in that post's meta. Settings live in the `locator_settings` option. Coordinates are typed in by hand on the location screen - nothing is geocoded against an outside provider. The storefront search filters cards in the visitor's browser, so no request is made while typing, and the plugin sends no email.
 
 == Changelog ==
+
+= 0.1.4 =
+* Renamed to Plogins Locator for WooCommerce for a more distinctive plugin name.
 
 = 0.1.3 =
 * Fix: store locations no longer take over the `manage_woocommerce` capability. Registering the locations post type mapped meta caps onto `manage_woocommerce`, which made every `manage_woocommerce` check fail while the plugin was active, hiding the whole WooCommerce admin menu (Settings, Status, Orders) and the plugin's own settings page.

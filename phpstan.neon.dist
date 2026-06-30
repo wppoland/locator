@@ -4,7 +4,7 @@ includes:
 parameters:
     level: 6
     paths:
-        - locator.php
+        - plogins-locator.php
         - uninstall.php
         - src
         - config

@@ -40,7 +40,7 @@ $locator_item_partial = __DIR__ . '/partials/locator-store-item.php';
         <?php if ($locator_show_search) : ?>
             <div class="locator__search">
                 <label for="<?php echo esc_attr($locator_input_id); ?>" class="locator__search-label">
-                    <?php esc_html_e('Find a store', 'locator'); ?>
+                    <?php esc_html_e('Find a store', 'plogins-locator'); ?>
                 </label>
                 <input
                     type="search"
@@ -48,7 +48,7 @@ $locator_item_partial = __DIR__ . '/partials/locator-store-item.php';
                     class="locator__search-input"
                     data-locator-search
                     autocomplete="off"
-                    placeholder="<?php esc_attr_e('Search by city, postcode or name…', 'locator'); ?>"
+                    placeholder="<?php esc_attr_e('Search by city, postcode or name…', 'plogins-locator'); ?>"
                     aria-describedby="<?php echo esc_attr($locator_count_id); ?>" />
                 <p
                     id="<?php echo esc_attr($locator_count_id); ?>"
@@ -59,13 +59,13 @@ $locator_item_partial = __DIR__ . '/partials/locator-store-item.php';
                     <?php
                     printf(
                         /* translators: %d: number of store locations. */
-                        esc_html(_n('%d location', '%d locations', count($locator_stores), 'locator')),
+                        esc_html(_n('%d location', '%d locations', count($locator_stores), 'plogins-locator')),
                         (int) count($locator_stores),
                     );
                     ?>
                 </p>
                 <p class="locator__noresults" data-locator-noresults hidden>
-                    <?php esc_html_e('No locations match your search.', 'locator'); ?>
+                    <?php esc_html_e('No locations match your search.', 'plogins-locator'); ?>
                 </p>
             </div>
         <?php endif; ?>

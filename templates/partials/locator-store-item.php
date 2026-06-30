@@ -46,7 +46,7 @@ $locator_fields = isset($locator_fields) && is_array($locator_fields) ? $locator
 
             <?php if (! empty($locator_fields['hours']) && '' !== trim($locator_store->hours)) : ?>
                 <div class="locator__hours">
-                    <span class="locator__hours-label"><?php esc_html_e('Opening hours', 'locator'); ?></span>
+                    <span class="locator__hours-label"><?php esc_html_e('Opening hours', 'plogins-locator'); ?></span>
                     <?php echo wp_kses_post(nl2br(esc_html($locator_store->hours))); ?>
                 </div>
             <?php endif; ?>
