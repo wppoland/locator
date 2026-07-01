@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Plugin Name:       Plogins Locator for WooCommerce
+ * Plugin Name:       Plogins Locator - Store Locator for WooCommerce
  * Plugin URI:        https://plogins.com/plogins-locator/
  * Description:        Show your physical store locations with a searchable list customers can filter by area.
  * Version:           0.1.4
